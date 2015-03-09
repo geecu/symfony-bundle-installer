@@ -10,6 +10,6 @@ if ($uri = \Phar::running()) {
   throw new \Exception('Could not find any autoloader');
 }
 
-$application = new \Symfony\Component\Console\Application('symfony-bundle', '0.1');
+$application = new \Composer\Console\Application();
 $application->add(new \Gk\SymfonyBundleInstaller\Command\InstallCommand());
 $application->run();
