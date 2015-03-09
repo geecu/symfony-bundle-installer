@@ -1,0 +1,34 @@
+{
+    "name": "gk/symfony-bundle-installer",
+    "type": "application",
+    "keywords": [
+        "Symfony2",
+        "bundles",
+        "install",
+        "installer",
+        "configurator",
+        "configure",
+        "configure"
+    ],
+    "description": "Symfony bundle installer/configurator",
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/console": "~2.6",
+        "composer/composer": "dev-master",
+        "sensio/generator-bundle": "~2.5",
+        "symfony/finder": "~2.6"
+    },
+    "autoload": {
+        "psr-0": {"Gk\\SymfonyBundleInstaller\\": "src"}
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Gunther Konig",
+            "email": "gunther_konig@yahoo.com"
+        }
+    ],
+    "bin": ["bin/symfony-bundle"]
+}

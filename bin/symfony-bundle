@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+if ($uri = \Phar::running()) {
+  require_once "$uri/../vendor/autoload.php";
+} elseif (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+  require_once __DIR__ . '/../vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/../../../../vendor/autoload.php')) {
+  require_once __DIR__ . '/../../../../vendor/autoload.php';
+} else {
+  throw new \Exception('Could not find any autoloader');
+}
+
+$application = new \Symfony\Component\Console\Application('symfony-bundle', '0.1');
+$application->add(new \Gk\SymfonyBundleInstaller\Command\InstallCommand());
+$application->run();
