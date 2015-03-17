@@ -3,7 +3,7 @@
 namespace Gk\SymfonyBundleInstaller\Formula;
 
 use Composer\Json\JsonFile;
-use Gk\SymfonyBundleInstaller\Installer\InstallerInterface;
+use Gk\SymfonyBundleInstaller\Installer\AbstractInstaller;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -18,7 +18,7 @@ class Formula
     protected $jsonData;
 
     /**
-     * @var InstallerInterface
+     * @var AbstractInstaller
      */
     protected $installer;
 
