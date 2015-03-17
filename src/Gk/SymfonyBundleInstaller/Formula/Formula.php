@@ -22,6 +22,11 @@ class Formula
      */
     protected $installer;
 
+    /**
+     * @var Application
+     */
+    protected $application;
+
     public function __construct($path)
     {
         $this->path = $path;
@@ -63,8 +68,10 @@ class Formula
         $output->writeln(sprintf('<info>Running %s</info>', $this->getPath()));
 
         $steps = $this->getInstaller()->getSteps();
+        $application = $this->getApplication($input, $output);
         foreach ($steps as $idx=>$step) {
             $output->writeln(sprintf('<info>Step %d: %s</info>', $idx + 1, $step));
+            $application->execute($step);
         }
     }
 
@@ -73,7 +80,7 @@ class Formula
         require_once($this->getAutoloaderPath());
     }
 
-    protected function getInstaller()
+    public function getInstaller()
     {
         if ($this->installer) {
             return $this->installer;
@@ -86,6 +93,17 @@ class Formula
         $this->installer = new $installerClass;
 
         return $this->installer;
+    }
+
+    protected function getApplication($input, $output)
+    {
+        if ($this->application) {
+            return $this->application;
+        }
+
+        $this->application = new Application($this, $input, $output);
+
+        return $this->application;
     }
 
 }
