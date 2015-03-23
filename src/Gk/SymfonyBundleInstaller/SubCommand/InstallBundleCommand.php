@@ -1,12 +1,12 @@
 <?php
 
-namespace Gk\SymfonyBundleInstaller\Step;
+namespace Gk\SymfonyBundleInstaller\SubCommand;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InstallBundleStep extends AbstractStep
+class InstallBundleCommand extends AbstractCommand
 {
     protected function configure()
     {

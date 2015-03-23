@@ -50,7 +50,7 @@ class Application
         $path = [
             __DIR__,
             '..',
-            'Step'
+            'SubCommand'
         ];
 
         $namespaceParts = explode('\\', __NAMESPACE__);
@@ -65,7 +65,7 @@ class Application
 
         $path = [
             $installer->getDirectory(),
-            'Step'
+            'SubCommand'
         ];
 
         $dir = implode(DIRECTORY_SEPARATOR, $path);
@@ -77,9 +77,9 @@ class Application
     protected function loadStepsFromDirectory($dir, $namespace)
     {
         $finder = new Finder();
-        $finder->files()->name('*Step.php')->in($dir);
+        $finder->files()->name('*Command.php')->in($dir);
 
-        $prefix = $namespace.'\\Step';
+        $prefix = $namespace.'\\SubCommand';
         foreach ($finder as $file) {
             /* @var SplFileInfo $file */
             $ns = $prefix;
@@ -88,7 +88,7 @@ class Application
             }
             $class = $ns . '\\' . $file->getBasename('.php');
             $r = new \ReflectionClass($class);
-            if ($r->isSubclassOf('\\Gk\\SymfonyBundleInstaller\\Step\\AbstractStep')
+            if ($r->isSubclassOf('\\Gk\\SymfonyBundleInstaller\\SubCommand\\AbstractCommand')
                 && !$r->isAbstract()
                 && !$r->getConstructor()->getNumberOfRequiredParameters()) {
                 $this->application->add($r->newInstance());
