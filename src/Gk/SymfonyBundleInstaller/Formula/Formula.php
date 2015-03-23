@@ -67,11 +67,11 @@ class Formula
     {
         $output->writeln(sprintf('<info>Running %s</info>', $this->getPath()));
 
-        $steps = $this->getInstaller()->getSteps();
+        $installCommands = $this->getInstaller()->getInstallCommands();
         $application = $this->getApplication($input, $output);
-        foreach ($steps as $idx=>$step) {
-            $output->writeln(sprintf('<info>Step %d: %s</info>', $idx + 1, $step));
-            $application->execute($step);
+        foreach ($installCommands as $idx=>$installCommand) {
+            $output->writeln(sprintf('<info>Step %d: %s</info>', $idx + 1, $installCommand));
+            $application->execute($installCommand);
         }
     }
 

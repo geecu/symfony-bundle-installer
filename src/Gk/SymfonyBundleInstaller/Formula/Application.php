@@ -36,8 +36,8 @@ class Application
         $this->output = $output;
 
         $this->application = new \Symfony\Component\Console\Application();
-        $this->loadBuiltinSteps();
-        $this->loadFormulaSteps();
+        $this->loadBuiltinSubCommands();
+        $this->loadFormulaSubCommands();
     }
 
     public function execute($command)
@@ -45,7 +45,7 @@ class Application
         $this->application->get($command)->run($this->input, $this->output);
     }
 
-    protected function loadBuiltinSteps()
+    protected function loadBuiltinSubCommands()
     {
         $path = [
             __DIR__,
@@ -56,10 +56,10 @@ class Application
         $namespaceParts = explode('\\', __NAMESPACE__);
         array_pop($namespaceParts);
 
-        $this->loadStepsFromDirectory(implode(DIRECTORY_SEPARATOR, $path), implode('\\', $namespaceParts));
+        $this->loadSubCommandsFromDirectory(implode(DIRECTORY_SEPARATOR, $path), implode('\\', $namespaceParts));
     }
 
-    protected function loadFormulaSteps()
+    protected function loadFormulaSubCommands()
     {
         $installer = $this->formula->getInstaller();
 
@@ -70,11 +70,11 @@ class Application
 
         $dir = implode(DIRECTORY_SEPARATOR, $path);
         if (file_exists($dir)) {
-            $this->loadStepsFromDirectory($dir, $installer->getNamespace());
+            $this->loadSubCommandsFromDirectory($dir, $installer->getNamespace());
         }
     }
 
-    protected function loadStepsFromDirectory($dir, $namespace)
+    protected function loadSubCommandsFromDirectory($dir, $namespace)
     {
         $finder = new Finder();
         $finder->files()->name('*Command.php')->in($dir);

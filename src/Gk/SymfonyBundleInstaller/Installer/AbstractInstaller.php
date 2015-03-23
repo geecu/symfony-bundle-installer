@@ -14,7 +14,7 @@ abstract class AbstractInstaller
     /**
      * @return array of command names to be executed in order
      */
-    abstract public function getSteps();
+    abstract public function getInstallCommands();
 
     public function getDirectory()
     {
