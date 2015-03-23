@@ -39,7 +39,7 @@ class InstallCommand extends Command
         }
 
         $formula = $this->getFormula($formulaPath);
-        $formula->run($input, $output);
+        $formula->run($input, $output, $this->getApplication());
 
     }
 

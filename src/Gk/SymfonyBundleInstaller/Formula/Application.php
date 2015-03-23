@@ -2,6 +2,7 @@
 
 namespace Gk\SymfonyBundleInstaller\Formula;
 
+use Gk\SymfonyBundleInstaller\SubCommand\ComposerApplicationAwareInterface;
 use Gk\SymfonyBundleInstaller\SubCommand\FormulaAwareInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,11 +31,17 @@ class Application
      */
     protected $output;
 
-    public function __construct(Formula $formula, InputInterface $input, OutputInterface $output)
+    /**
+     * @var \Composer\Console\Application
+     */
+    protected $composerApplication;
+
+    public function __construct(Formula $formula, InputInterface $input, OutputInterface $output, \Composer\Console\Application $composerApplication)
     {
         $this->formula = $formula;
         $this->input = $input;
         $this->output = $output;
+        $this->composerApplication = $composerApplication;
 
         $this->application = new \Symfony\Component\Console\Application();
         $this->loadBuiltinSubCommands();
@@ -57,6 +64,11 @@ class Application
             $command->setFormula($this->formula);
         }
 
+        if ($command instanceof ComposerApplicationAwareInterface) {
+            $command->setComposerApplication($this->composerApplication);
+        }
+
+        return $command;
     }
 
     protected function loadBuiltinSubCommands()

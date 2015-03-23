@@ -2,6 +2,7 @@
 
 namespace Gk\SymfonyBundleInstaller\Formula;
 
+use Composer\Console\Application as ComposerApplication;
 use Composer\Json\JsonFile;
 use Gk\SymfonyBundleInstaller\Installer\AbstractInstaller;
 use Symfony\Component\Console\Input\InputInterface;
@@ -63,12 +64,12 @@ class Formula
         return $this->jsonData;
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output, ComposerApplication $composerApplication)
     {
         $output->writeln(sprintf('<info>Running %s</info>', $this->getPath()));
 
         $installCommands = $this->getInstaller()->getInstallCommands();
-        $application = $this->getApplication($input, $output);
+        $application = $this->getApplication($input, $output, $composerApplication);
         foreach ($installCommands as $idx=>$installCommand) {
             $output->writeln(sprintf('<info>Step %d: %s</info>', $idx + 1, $installCommand));
             $application->execute($installCommand);
@@ -95,13 +96,18 @@ class Formula
         return $this->installer;
     }
 
-    protected function getApplication($input, $output)
+    public function getInstallerBundle()
+    {
+        return $this->jsonData['extra'][self::INSTALLER_BUNDLE_KEY];
+    }
+
+    protected function getApplication(InputInterface $input, OutputInterface $output, ComposerApplication $composerApplication)
     {
         if ($this->application) {
             return $this->application;
         }
 
-        $this->application = new Application($this, $input, $output);
+        $this->application = new Application($this, $input, $output, $composerApplication);
 
         return $this->application;
     }
