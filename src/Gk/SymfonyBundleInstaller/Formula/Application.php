@@ -2,6 +2,7 @@
 
 namespace Gk\SymfonyBundleInstaller\Formula;
 
+use Gk\SymfonyBundleInstaller\SubCommand\FormulaAwareInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -42,7 +43,20 @@ class Application
 
     public function execute($command)
     {
-        $this->application->get($command)->run($this->input, $this->output);
+        $this->getCommand($command)
+            ->run($this->input, $this->output);
+    }
+
+    protected function getCommand($command)
+    {
+        $command = $this->application
+            ->get($command)
+            ;
+
+        if ($command instanceof FormulaAwareInterface) {
+            $command->setFormula($this->formula);
+        }
+
     }
 
     protected function loadBuiltinSubCommands()
