@@ -2,30 +2,30 @@
 
 namespace Gk\SymfonyBundleInstaller\SubCommand;
 
-use Composer\Composer;
+use Composer\Console\Application;
 
-trait ComposerAwareTrait
+trait ComposerApplicationAwareTrait
 {
     /**
      * @var Composer
      */
-    private $composer;
+    private $composerApplication;
 
     /**
      * @return Composer
      */
-    public function getComposer()
+    public function getComposerApplication()
     {
-        return $this->composer;
+        return $this->composerApplication;
     }
 
     /**
-     * @param Composer $composer
+     * @param Composer $composerApplication
      * @return mixed
      */
-    public function setComposer(Composer $composer)
+    public function setComposerApplication(Application $composerApplication)
     {
-        $this->composer = $composer;
+        $this->composerApplication = $composerApplication;
 
         return $this;
     }
