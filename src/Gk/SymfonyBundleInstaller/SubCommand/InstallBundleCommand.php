@@ -16,11 +16,8 @@ class InstallBundleCommand extends AbstractCommand
     protected function configure()
     {
         $this->setName('install:bundle')
-            ->setDescription('Installs and configures a Symony bundle')
-            ->addArgument('formula',
-                InputArgument::REQUIRED,
-                'Composer package name of the installer formula'
-            );
+            ->setDescription('Installs the Symfony bundle provided by the formula using composer require')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
