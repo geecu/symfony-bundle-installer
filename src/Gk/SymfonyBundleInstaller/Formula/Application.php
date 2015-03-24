@@ -50,8 +50,10 @@ class Application
 
     public function execute($command)
     {
+        $input = new ArrayInput([]);
+
         $this->getCommand($command)
-            ->run($this->input, $this->output);
+            ->run($input, $this->output);
     }
 
     protected function getCommand($command)
