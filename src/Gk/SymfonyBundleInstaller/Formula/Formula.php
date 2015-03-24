@@ -12,7 +12,7 @@ class Formula
 {
     const JSON_TYPE = 'symfony-bundle-utils-formula';
     const INSTALLER_CLASS_KEY = 'sfbu-installer';
-    const INSTALLER_BUNDLE_KEY = 'sfbu-bundle';
+    const BUNDLES_TO_INSTALL_KEY = 'sfbu-bundle';
 
     protected $path;
 
@@ -96,9 +96,13 @@ class Formula
         return $this->installer;
     }
 
-    public function getInstallerBundle()
+    public function getBundlesToInstall()
     {
-        return $this->jsonData['extra'][self::INSTALLER_BUNDLE_KEY];
+        $bundlesString = $this->jsonData['extra'][self::BUNDLES_TO_INSTALL_KEY];
+
+        $bundles = array_map('trim', explode(',', $bundlesString));
+
+        return $bundles;
     }
 
     protected function getApplication(InputInterface $input, OutputInterface $output, ComposerApplication $composerApplication)
