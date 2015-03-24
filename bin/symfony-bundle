@@ -11,5 +11,6 @@ if ($uri = \Phar::running()) {
 }
 
 $application = new \Composer\Console\Application();
+$application->setAutoExit(false);
 $application->add(new \Gk\SymfonyBundleInstaller\Command\InstallCommand());
 $application->run();
