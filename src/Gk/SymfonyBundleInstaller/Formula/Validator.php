@@ -60,14 +60,14 @@ class Validator
             throw new \UnexpectedValueException(sprintf("Package's composer.json doesn't have an 'extra' key"));
         }
 
-        if (!isset($this->data['extra'][Formula::BUNDLES_TO_INSTALL_KEY])) {
+        if (!isset($this->data['extra'][Formula::MANAGED_BUNDLES_KEY])) {
             throw new \UnexpectedValueException(sprintf("Package's composer.json doesn't specify a bundle (or more) to install (key '%s' in 'extra')",
-                Formula::BUNDLES_TO_INSTALL_KEY));
+                Formula::MANAGED_BUNDLES_KEY));
         }
 
         if (!isset($this->data['extra'][Formula::INSTALLER_CLASS_KEY])) {
             throw new \UnexpectedValueException(sprintf("Package's composer.json doesn't specify an installer class (key '%s' in 'extra')",
-                Formula::BUNDLES_TO_INSTALL_KEY));
+                Formula::MANAGED_BUNDLES_KEY));
         }
     }
 }

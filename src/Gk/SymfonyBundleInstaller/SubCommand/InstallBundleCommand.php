@@ -22,7 +22,7 @@ class InstallBundleCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundlesToInstall = $this->getFormula()->getBundlesToInstall();
+        $bundlesToInstall = $this->getFormula()->getManagedBundles();
         $composerApplication = $this->getComposerApplication();
         $composerInput = new StringInput(sprintf('require %s', join(' ', $bundlesToInstall)));
         $composerApplication->run($composerInput, $output);

@@ -21,6 +21,6 @@ class InstallKernelCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundlesToInstall = $this->getFormula()->getBundlesToInstall();
+        $managedBundles = $this->getFormula()->getManagedBundles();
     }
 }
