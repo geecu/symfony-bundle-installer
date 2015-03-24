@@ -4,22 +4,19 @@ namespace Gk\SymfonyBundleInstaller\Formula;
 
 use Gk\SymfonyBundleInstaller\SubCommand\ComposerApplicationAwareInterface;
 use Gk\SymfonyBundleInstaller\SubCommand\FormulaAwareInterface;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class Application
+class Application extends \Symfony\Component\Console\Application
 {
     /**
      * @var Formula
      */
     protected $formula;
-
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\Console\Application
-     */
-    protected $application;
 
     /**
      * @var InputInterface
@@ -38,12 +35,13 @@ class Application
 
     public function __construct(Formula $formula, InputInterface $input, OutputInterface $output, \Composer\Console\Application $composerApplication)
     {
+        parent::__construct();
+
         $this->formula = $formula;
         $this->input = $input;
         $this->output = $output;
         $this->composerApplication = $composerApplication;
 
-        $this->application = new \Symfony\Component\Console\Application();
         $this->loadBuiltinSubCommands();
         $this->loadFormulaSubCommands();
     }
@@ -58,9 +56,7 @@ class Application
 
     protected function getCommand($command)
     {
-        $command = $this->application
-            ->get($command)
-            ;
+        $command = $this->get($command);
 
         if ($command instanceof FormulaAwareInterface) {
             $command->setFormula($this->formula);
@@ -119,9 +115,13 @@ class Application
             if ($r->isSubclassOf('\\Gk\\SymfonyBundleInstaller\\SubCommand\\AbstractCommand')
                 && !$r->isAbstract()
                 && !$r->getConstructor()->getNumberOfRequiredParameters()) {
-                $this->application->add($r->newInstance());
+                $this->add($r->newInstance());
             }
         }
     }
 
+    protected function getDefaultInputDefinition()
+    {
+        return new InputDefinition([]);
+    }
 }
